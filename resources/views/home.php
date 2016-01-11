@@ -103,6 +103,53 @@
                     <p>Envie-nos um Pull Request até 10/01/2016</p>
                 </section>
 
+                <!-- Slides JWT - Ivan Rosolen -->
+                <section>
+                    <h1>JSON WEB TOKEN</h1>
+                    <br><br>
+                    <h4>Ivan Rosolen</h4>
+                </section>
+
+                <section>
+                    <h1>Ivan Rosolen</h1>
+                    <p>Graduado em Sistemas de Informa&ccedil;&atilde;o</p>
+                    <p>P&oacute;s-graduado em Ger&ecirc;ncia de Projetos</p>
+                    <p>Desenvolvedor a 15+ anos</p>
+                    <p>Autor de v&aacute;rios PHPT (testes para o PHP)</p>
+                    <p>Entusiasta de novas tecnologias</p>
+                    <h3>Head of Innovation @ Arizona</h3>
+                    <h3>CTO @ Mokation</h3>
+                </section>
+
+                <section>
+                    <h1>@ivanrosolen</h1>
+                </section>
+
+                <section>
+                    <h1>Authentication</h1>
+                </section>
+
+                <section>
+                    <ul>
+                        <li>Form Request Post/Get</li>
+                        <li>OAuth</li>
+                        <li>Key/Hash</li>
+                        <li>Plain Text Credentials</li>
+                        <li>Session Cookies</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <ul>
+                        <li>Data is stored in plain text on the server</li>
+                        <li>Filesystem read/write requests</li>
+                        <li>Distributed/clustered applications</li>
+                        <li>Redis/Sticky sessions</li>
+                    </ul>
+                </section>
+
+                <!-- Slides JWT - Ivan Rosolen -->
+
 			</div>
 
 		</div>
