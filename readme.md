@@ -1,8 +1,8 @@
 # Tema Base para Slides do Seminário Locaweb PHPSP
 
-Bem vindo palestrante, esse repositório contém o tema base para os slides do Seminário Locaweb PHPSP. Aqui você
-encontrará toda a estrutura necessária para desenvolver seus slides de forma simples e permitindo total interatividade
-aos participantes do evento.
+Bem vindo palestrante, esse repositório contém o tema base para os slides do Seminário Locaweb PHPSP. 
+
+Aqui você encontrará toda a estrutura necessária para desenvolver seus slides de forma simples e permitindo total interatividade aos participantes do evento.
 
 ## Instalando as Dependencias
 
@@ -13,6 +13,53 @@ composer install
 ```
 
 ## Rodando a Aplicação
+
+Você pode rodar a aplicação de 3 formas: 'AZK', 'Vagrant' ou 'Localmente'. Cada forma é explicada abaixo:
+
+### AZK
+
+Instale o AZK (caso não tenha ainda instalado): http://docs.azk.io/en/installation/
+
+Dica: Para MacOSX e Windows, você precisará do Virtualbox.
+
+Vá até a pasta do projeto e rode:
+
+```bash
+azk start
+```
+
+A saída deve ser algo como:
+
+```bash
+azk: ↑ starting `websocket` system, 1 new instances...
+azk: ✓ checking `library/php:fpm` image...
+azk: ◴ waiting for `websocket` system to start, trying connection to port websocket/tcp...
+azk: ↑ starting `php` system, 1 new instances...
+azk: ◴ waiting for `php` system to start, trying connection to port fastcgi/tcp...
+azk: ↑ starting `nginx` system, 1 new instances...
+azk: ✓ checking `library/nginx:latest` image...
+azk: ◴ waiting for `nginx` system to start, trying connection to port http/tcp...
+
+┌───┬───────────┬───────────┬─────────────────────────────┬───────────────────────────────┬─────────────┐
+│   │ System    │ Instances │ Hostname/url                │ Instances-Ports               │ Provisioned │
+├───┼───────────┼───────────┼─────────────────────────────┼───────────────────────────────┼─────────────┤
+│ ↑ │ nginx     │ 1         │ http://seminario.dev.azk.io │ 1-http:32789, 1-443:32788     │ -           │
+│   │           │           │                             │                               │             │
+├───┼───────────┼───────────┼─────────────────────────────┼───────────────────────────────┼─────────────┤
+│ ↑ │ php       │ 1         │ dev.azk.io                  │ 1-fastcgi:9000                │ -           │
+├───┼───────────┼───────────┼─────────────────────────────┼───────────────────────────────┼─────────────┤
+│ ↑ │ websocket │ 1         │ dev.azk.io                  │ 1-websocket:777, 1-9000:32787 │ -           │
+│   │           │           │                             │                               │             │
+└───┴───────────┴───────────┴─────────────────────────────┴───────────────────────────────┴─────────────┘
+```
+
+Após as instâncias estarem rodando, abra no navegador: http://seminario.dev.azk.io/
+
+Para o modo apresentador (que permite trocar os slides): http://seminario.dev.azk.io/presenter
+Usuário: admin
+Senha: phprules
+
+### Vagrant
 
 Certifique-se de ter instalado Vagrant, Virtualbox e o plugin `vagrant-hostmanager`. Os plugins `vagrant-cachier` e 
 `vagrant-bindfs` são opcionais.

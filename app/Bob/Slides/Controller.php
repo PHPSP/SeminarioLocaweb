@@ -63,11 +63,13 @@ class Controller implements MessageComponentInterface
         }
 
         if (! array_key_exists('session', $queryParams)) {
+            echo 'Conexão fechada por não ter enviado o ID da sessão';
             $connection->close();
             return;
         }
 
         if (! \Cache::has($queryParams['session'])) {
+            echo 'Conexão fechada por não ter encontrado a sessão';
             $connection->close();
             return;
         }

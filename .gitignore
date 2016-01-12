@@ -2,12 +2,16 @@
 ## Personal
 #################
 
+.azk/
 vendor/
 private/
 data/
 .vagrant/
 node_modules/
-
+storage/framework/cache/*
+storage/framework/sessions/*
+storage/framework/views/*
+storage/logs/*
 
 #################
 ## Eclipse
