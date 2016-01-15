@@ -12,15 +12,7 @@ class Kernel extends ConsoleKernel
      * @var array
      */
     protected $commands = [
-        'App\Console\Commands\BuildChildCommand',
-        'App\Console\Commands\BuildForkCommand',
-        'App\Console\Commands\BuildNormalCommand',
-        'App\Console\Commands\BuildRawCommand',
-        'App\Console\Commands\BuildReactCommand',
-        'App\Console\Commands\BuildReactSocketCommand',
-        'App\Console\Commands\ChildReactCommand',
-        'App\Console\Commands\SlidesServerCommand',
-        'App\Console\Commands\SocketServerCommand'
+        'App\Console\Commands\SlidesServerCommand'
     ];
 
     /**
