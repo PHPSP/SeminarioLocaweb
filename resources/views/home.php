@@ -572,6 +572,60 @@
             </code></pre>
           </section>
         </section>
+        <section>
+          <section>
+            <h2>Sockets</h2>
+          </section>
+          <section>
+            <h2>
+              Socket - O canal
+            </h2>
+            <p>
+              React\Socket serve justamente para simplificar a criação de
+              servidores utilizando o protocolo TCP/IP.
+            </p>
+          </section>
+          <section>
+            <p>
+              Lembram deste trecho de código?
+            </p>
+            <pre><code class="php">
+      // Um OtServer em PHP?? Quem sabe?! O.o
+      $sock = stream_socket_server('tcp://0.0.0.0:7171');
+      $server = new React\Stream\Stream($sock, $loop);
+
+      $server->on('data', function($data) use ($sock) {
+          // Um readable resource => new Stream($clientSock) *-*
+          $clientSock = stream_socket_accept($sock);
+      });
+            </code></pre>
+            <p>
+              Parece até simples se você não precisa identificar as conexões,
+              organizar os fluxos de entrada e saída, buffers e tudo mais.
+            </p>
+          </section>
+          <section>
+            <h2>
+              React\Stream
+            </h2>
+            <pre><code class="php">
+      $stdOut = new React\Stream\Stream(STDOUT, $loop);
+      $server = new React\Socket\Server($loop);
+
+      $server->on('connection', function ($conn) use ($stdOut) {
+          // Alguém se conectou!! *-*
+          $conn->write('Olá, intruso! >_<');
+
+          $conn->pipe($stdOut);
+      });
+
+      $server->listen(7171, '0.0.0.0');
+            </code></pre>
+          </section>
+        </section>
+        <section>
+          
+        </section>
 			</div>
 
 		</div>
