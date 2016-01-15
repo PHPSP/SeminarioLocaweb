@@ -355,10 +355,21 @@
                     <h2>
                       Nossos conceitos chave são <strong>assíncrono</strong> e <strong>paralelo</strong>!
                     </h2>
+                    <p>
+                      Vamos conhecer agora as ferramentas React de acordo com estes conceitos.
+                    </p>
                   </section>
+                </section>
+                <section>
                   <section>
                     <h2>
-                      EventLoop - O paralelo
+                      Event Loop
+                    </h2>
+                  </section>
+
+                  <section>
+                    <h2>
+                      EventLoop - O maestro
                     </h2>
                     <p>
                       É o grande responsável por controlar os processos
@@ -466,7 +477,100 @@
             </p>
           </section>
           <section data-background="images/event-loop.jpg" data-background-size="1200px" data-background-color="#50534a"></section>
+                </section>
+        <section>
+          <section>
+            <h2>
+              Streams
+            </h2>
+          </section>
+          <section data-background="images/minions.gif">
+            <div style="background-color: rgba(0, 0, 0, .4); border-radius: .5em; padding: 1em">
+              <h2>
+                Streams - Os Minions
+              </h2>
+              <p>
+                De nada adianta um Gru que orquestre todo o trabalho se não
+                há quem o realize.
+              </p>
+            </div>
+          </section>
+          <section>
+            <h2>
+              React\Stream
+            </h2>
+            <p>
+              Este pacote contém dois itens principais:
+            </p>
+            <ul>
+              <li>Buffer</li>
+              <li>Stream</li>
+            </ul>
+            <p>
+              A partir deste tópico começaremos a abordar processos <strong>paralelos</strong>
+              e <strong>assíncronos</strong>.
+            </p>
+          </section>
+          <section>
+            <h2>
+              Buffer
+            </h2>
+            <p>
+              Buffers são os responsáveis por nos comunicar com processos
+              de I/O, facilitando a escrita em <strong>resources</strong>.
+            </p>
+            <pre><code class="php">
+      // Exemplo de variável do tipo *resource*
+      $resource = fopen('arquivo.txt', 'w+');
 
+      $buffer = new React\Stream\Buffer($resource, $loop);
+      $buffer->write('Hello, buffer!');
+            </code></pre>
+            <p>
+              A implementação da classe Buffer vai além da simples escrita:<br>
+              Buffer também se preocupa com o tamanho dos itens a serem
+              escritos e particiona a escrita entre os ciclos do EventLoop.
+            </p>
+          </section>
+          <section>
+            <h2>Stream</h2>
+            <p>
+              Já os streams são nossos heróis de leitura e escrita de <strong>resources</strong>.
+              Os utilizamos através do <strong>on()</strong>, <strong>write()</strong>
+              e <strong>pipe()</strong>:
+            </p>
+            <pre><code class="php">
+      $phpsp = fopen('http://phpsp.org.br', 'r');
+      $saida = fopen('./saida.html', 'w+');
+      $callback = function ($data) {/*...*/};
+
+      $reader = new React\Stream\Stream($phpsp, $loop);
+      $writer = new React\Stream\Stream($saida, $loop);
+      $reader->on('data', $callback);
+
+      $reader->pipe($writer);
+            </code></pre>
+          </section>
+          <section>
+            <h2>
+              Streams! Streams everywhere!
+            </h2>
+            <p>
+              Os Streams e Buffers operam com todo tipo de <strong>resource</strong>.
+              Portanto sockets, I/O de arquivos e quaisquer outros tipos de streams
+              que façam leitura ou escrita.
+            </p>
+            <pre><code class="php">
+      // Um OtServer em PHP?? Quem sabe?! O.o
+      $sock = stream_socket_server('tcp://0.0.0.0:7171');
+      $server = new React\Stream\Stream($sock, $loop);
+
+      $server->on('data', function($data) use ($sock) {
+          // Um readable resource => new Stream($clientSock) *-*
+          $clientSock = stream_socket_accept($sock);
+      });
+            </code></pre>
+          </section>
         </section>
 			</div>
 
