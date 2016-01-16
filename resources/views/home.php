@@ -29,12 +29,36 @@
 			link.type = 'text/css';
 			link.href = window.location.search.match( /print-pdf/gi ) ? 'css/print/pdf.css' : 'css/print/paper.css';
 			document.getElementsByTagName( 'head' )[0].appendChild( link );
+
+      function toggleFullScreen() {
+        var noSleep = new NoSleep();
+        noSleep.enable();
+        if ((document.fullScreenElement && document.fullScreenElement !== null) ||    
+         (!document.mozFullScreen && !document.webkitIsFullScreen)) {
+          if (document.documentElement.requestFullScreen) {  
+            document.documentElement.requestFullScreen();  
+          } else if (document.documentElement.mozRequestFullScreen) {  
+            document.documentElement.mozRequestFullScreen();  
+          } else if (document.documentElement.webkitRequestFullScreen) {  
+            document.documentElement.webkitRequestFullScreen(Element.ALLOW_KEYBOARD_INPUT);  
+          }  
+        } else {  
+          if (document.cancelFullScreen) {  
+            document.cancelFullScreen();  
+          } else if (document.mozCancelFullScreen) {  
+            document.mozCancelFullScreen();  
+          } else if (document.webkitCancelFullScreen) {  
+            document.webkitCancelFullScreen();  
+          }  
+        }  
+      }
 		</script>
 
 		<!--[if lt IE 9]><script src="lib/js/html5shiv.js"></script><![endif]-->
 	</head>
 
 	<body data-websockets-address="<?php echo $websocketsAddress; ?>" data-mode="<?php echo $mode; ?>">
+    <img onclick="toggleFullScreen();" src="images/fullscreen.png" style="position: fixed;bottom: 1em;right: 1em;width:2em; z-index: 9999999;">
 
 		<div class="reveal">
             <div class="users-counter"></div>
@@ -183,10 +207,10 @@
       }
                       </code></pre>
                   </section>
-                  <section data-background-size="290px" data-background="images/creating-player/sincrono/01.png"></section>
-                  <section data-background-size="290px" data-background="images/creating-player/sincrono/02.png"></section>
-                  <section data-background-size="290px" data-background="images/creating-player/sincrono/03.png"></section>
-                  <section data-background-size="290px" data-background="images/creating-player/sincrono/04.png"></section>
+                  <section data-background-size="20%" data-background="images/creating-player/sincrono/01.png"></section>
+                  <section data-background-size="20%" data-background="images/creating-player/sincrono/02.png"></section>
+                  <section data-background-size="20%" data-background="images/creating-player/sincrono/03.png"></section>
+                  <section data-background-size="20%" data-background="images/creating-player/sincrono/04.png"></section>
                   <section>
                     <h2>
                       Este código é...
@@ -324,16 +348,16 @@
                     </code></pre>
 
                   </section>
-                  <section data-background-size="570px" data-background="images/creating-player/paralelo/01.png"></section>
-                  <section data-background-size="570px" data-background="images/creating-player/paralelo/02.png"></section>
-                  <section data-background-size="570px" data-background="images/creating-player/paralelo/03.png"></section>
-                  <section data-background-size="570px" data-background="images/creating-player/paralelo/04.png"></section>
-                  <section data-background-size="570px" data-background="images/creating-player/paralelo/05.png"></section>
-                  <section data-background-size="570px" data-background="images/creating-player/paralelo/06.png"></section>
-                  <section data-background-size="570px" data-background="images/creating-player/paralelo/07.png"></section>
-                  <section data-background-size="570px" data-background="images/creating-player/paralelo/08.png"></section>
-                  <section data-background-size="570px" data-background="images/creating-player/paralelo/09.png"></section>
-                  <section data-background-size="570px" data-background="images/creating-player/paralelo/10.png"></section>
+                  <section data-background-size="42%" data-background="images/creating-player/paralelo/01.png"></section>
+                  <section data-background-size="42%" data-background="images/creating-player/paralelo/02.png"></section>
+                  <section data-background-size="42%" data-background="images/creating-player/paralelo/03.png"></section>
+                  <section data-background-size="42%" data-background="images/creating-player/paralelo/04.png"></section>
+                  <section data-background-size="42%" data-background="images/creating-player/paralelo/05.png"></section>
+                  <section data-background-size="42%" data-background="images/creating-player/paralelo/06.png"></section>
+                  <section data-background-size="42%" data-background="images/creating-player/paralelo/07.png"></section>
+                  <section data-background-size="42%" data-background="images/creating-player/paralelo/08.png"></section>
+                  <section data-background-size="42%" data-background="images/creating-player/paralelo/09.png"></section>
+                  <section data-background-size="42%" data-background="images/creating-player/paralelo/10.png"></section>
                   <section>
                     <p>
                       Trabalhar com processos em <strong>paralelo</strong> cria uma gama
@@ -399,7 +423,7 @@
                       </ul>
                     </p>
                   </section>
-                  <section data-background="images/event-loop.jpg" data-background-size="1200px" data-background-color="#50534a"></section>
+                  <section data-background="images/event-loop.jpg" data-background-size="90%" data-background-color="#50534a"></section>
                   
                   <section>
                     <h2>
@@ -476,7 +500,7 @@
               <strong>Este é o coração do React PHP.</strong>
             </p>
           </section>
-          <section data-background="images/event-loop.jpg" data-background-size="1200px" data-background-color="#50534a"></section>
+          <section data-background="images/event-loop.jpg" data-background-size="90%" data-background-color="#50534a"></section>
                 </section>
         <section>
           <section>
@@ -689,7 +713,7 @@
 		<script src="js/plugins/jquery.min.js"></script>
 		<script src="lib/js/head.min.js"></script>
 		<script src="js/plugins/reveal.js"></script>
-        <script src="js/plugins/soundjs-0.6.0.combined.js"></script>
+    <script src="js/plugins/soundjs-0.6.0.combined.js"></script>
 
 		<script>
             var mode = $('body').attr('data-mode');
@@ -740,6 +764,7 @@
 			// https://github.com/hakimel/reveal.js#configuration
 			Reveal.initialize(revealConfig);
 		</script>
+    <script src="js/plugins/NoSleep.min.js"></script>
 
 	</body>
 </html>
