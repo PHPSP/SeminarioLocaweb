@@ -606,7 +606,7 @@
           </section>
           <section>
             <h2>
-              React\Stream
+              React\Socket
             </h2>
             <pre><code class="php">
       $stdOut = new React\Stream\Stream(STDOUT, $loop);
@@ -623,8 +623,64 @@
             </code></pre>
           </section>
         </section>
+        <section data-background="images/ross.gif">
+          <div style="background-color: rgba(0, 0, 0, .4); border-radius: .5em; padding: 1em" class="fragment fade-in">
+            <p>
+              Legal, legal...
+            </p>
+            <p class="fragment fade-in">
+              Isso é só a base do React PHP, agora vamos à parte interessante!!
+            </p>
+          </div>
+        </section>
         <section>
-          
+          <section data-background="images/telecurso-revisao.gif"></section>
+          <section>
+            <h2>
+              React PHP
+            </h2>
+            <p>
+              Fazendo o resumão de tudo, <strong>React PHP</strong>:
+              <ul>
+                <li class="fragment fade-in">
+                  Tem um EventLoop que organiza as execuções
+                </li>
+                <li class="fragment fade-in">
+                  Tem Streams, que ajudam a manipular I/O
+                </li>
+                <li class="fragment fade-in">
+                  Tem Sockets, que nos permite comunicar por rede
+                </li>
+                <li class="fragment fade-in">
+                  Tem uma boa abstração para trabalhar com <strong>resources</strong>
+                </li>
+              </ul>
+            </p>
+          </section>
+          <section>
+            <h2>
+              Nota: React PHP lida com <strong>resources</strong>
+            </h2>
+            <p>
+              Portanto os resultados de <strong>popen()</strong>,
+              <strong>fopen()</strong>, <strong>stream_socket_server()</strong>,
+              <strong>inotify_init()</strong>, e outros, poderão ser manipulados
+              dentro do código PHP de forma facilitada.
+            </p>
+          </section>
+          <section>
+            <p>
+              Se eu tenho acesso a I/O, subprocessos e rede, o que
+              é que eu não posso fazer!?
+            </p>
+          </section>
+          <section data-background="images/hell-yeah.gif"></section>
+          <section>
+            <p>
+              Nada <br>
+              <strong class="fragment fade-in">:)</strong>
+            </p>
+          </section>
         </section>
 			</div>
 
