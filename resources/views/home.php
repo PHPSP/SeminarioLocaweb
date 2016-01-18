@@ -124,6 +124,39 @@
                     <h1>@ivanrosolen</h1>
                 </section>
 
+                <section class="poll" data-number="4211">
+                    <p>Criei ou utilizei uma API</p>
+
+                    <div class="button-level" data-value="sim">
+                        <span>Sim (<b>0</b>)</span>
+                        <div class="level green"></div>
+                    </div>
+
+                    <div class="button-level" data-value="não">
+                        <span>Não (<b>0</b>)</span>
+                        <div class="level red"></div>
+                    </div>
+                </section>
+
+                <section class="poll" data-number="4212">
+                    <p>Autentica&ccedil;&atilde;o</p>
+
+                    <div class="button-level" data-value="jwt">
+                        <span>JWT (<b>0</b>)</span>
+                        <div class="level green"></div>
+                    </div>
+
+                    <div class="button-level" data-value="oauth">
+                        <span>OAuth (<b>0</b>)</span>
+                        <div class="level blue"></div>
+                    </div>
+
+                    <div class="button-level" data-value="outros">
+                        <span>Outros (<b>0</b>)</span>
+                        <div class="level red"></div>
+                    </div>
+                </section>
+
                 <section>
                     <h1>Authentication</h1>
                 </section>
@@ -222,15 +255,15 @@
                         <li>iss: The issuer of the token</li>
                         <li>sub: The subject of the token</li>
                         <li>aud: The audience of the token</li>
-                        <li>exp: This will probably be the registered claim most often used. This will define the expiration in NumericDate value. The expiration MUST be after the current date/time.</li>
+                        <li>exp: This will define the expiration in NumericDate value. MUST be after the current time</li>
                         <li>nbf: Defines the time before which the JWT MUST NOT be accepted for processing</li>
-                        <li>iat: The time the JWT was issued. Can be used to determine the age of the JWT</li>
-                        <li>jti: Unique identifier for the JWT. Can be used to prevent the JWT from being replayed. This is helpful for a one time use token.</li>
+                        <li>iat: The time the JWT was issued</li>
+                        <li>jti: Unique identifier for the JWT</li>
                     </ul>
-                    <p>Ref.:
+                    <p><small>Ref.:
                         <a href="http://www.slideshare.net/lcobucci/jwt-to-authentication-and-beyond" target="_blank">
                             http://www.slideshare.net/lcobucci/jwt-to-authentication-and-beyond
-                        </a>
+                        </a></small>
                     </p>
                 </section>
 
@@ -249,11 +282,11 @@
                 </section>
 
                 <section>
-                    <h1>JWT</h1>
-                    <h2>eyJ0eXAiOiAiSldUIiwiYWxnIjogIkhTMjU2In0=</h2>
-                    <h2>.</h2>
-                    <h2>eyJpc3MiOiAiaXZhbnJvc29sZW4uY29tIiwiZXhwIjogMTMwMDgxOTM4MCwibmFtZSI6ICJJdmFuIFJvc29sZW4iLCJhZG1pbiI6IHRydWV9</h2>
-                    <h2>.</h2>
+                    <h1>JWT</h4>
+                    <h4>eyJ0eXAiOiAiSldUIiwiYWxnIjogIkhTMjU2In0=</h4>
+                    <h4>.</h4>
+                    <h4>eyJpc3MiOiAiaXZhbnJvc29sZW4uY29tIiwiZXhwIjogMTMwMDgxOTM4MCwibmFtZSI6ICJJdmFuIFJvc29sZW4iLCJhZG1pbiI6IHRydWV9</h4>
+                    <h4>.</h4>
                 </section>
 
                 <section>
@@ -286,12 +319,12 @@ HMACSHA256(encodedString, 'Xuplau');
                 </section>
 
                 <section>
-                    <h1>JWT</h1>
-                    <h2>eyJ0eXAiOiAiSldUIiwiYWxnIjogIkhTMjU2In0=</h2>
-                    <h2>.</h2>
-                    <h2>eyJpc3MiOiAiaXZhbnJvc29sZW4uY29tIiwiZXhwIjogMTMwMDgxOTM4MCwibmFtZSI6ICJJdmFuIFJvc29sZW4iLCJhZG1pbiI6IHRydWV9</h2>
-                    <h2>.</h2>
-                    <h2>M2FjZTM0M2ZiNjhhMzBiOWNiYTkxN2U1Zjk4YjUxOWYzMTY3NGZlMmU4MTIzYjU1NTRkMjNlNjYzOTkyZGU2Nw==</h2>
+                    <h1>JWT</h4>
+                    <h4>eyJ0eXAiOiAiSldUIiwiYWxnIjogIkhTMjU2In0=</h4>
+                    <h4>.</h4>
+                    <h4>eyJpc3MiOiAiaXZhbnJvc29sZW4uY29tIiwiZXhwIjogMTMwMDgxOTM4MCwibmFtZSI6ICJJdmFuIFJvc29sZW4iLCJhZG1pbiI6IHRydWV9</h4>
+                    <h4>.</h4>
+                    <h4>M2FjZTM0M2ZiNjhhMzBiOWNiYTkxN2U1Zjk4YjUxOWYzMTY3NGZlMmU4MTIzYjU1NTRkMjNlNjYzOTkyZGU2Nw==</h4>
                 </section>
 
                 <section>
@@ -426,12 +459,12 @@ if ( $token->validate($data) !== true ||
                     </p>
                     <p>
                         <a href="https://developer.atlassian.com/static/connect/docs/latest/concepts/understanding-jwt.html" target="_blank">
-                            https://developer.atlassian.com/static/connect/docs/latest/concepts/understanding-jwt.html
+                            https://developer.atlassian.com/.../understanding-jwt.html
                         </a>
                     </p>
                     <p>
                         <a href="http://stackoverflow.com/questions/20588467/how-to-do-stateless-session-less-cookie-less-authentication" target="_blank">
-                            http://stackoverflow.com/questions/20588467/how-to-do-stateless-session-less-cookie-less-authentication
+                            http://stackoverflow.com/....less-cookie-less-authentication
                         </a>
                     </p>
                 </section>
@@ -440,12 +473,15 @@ if ( $token->validate($data) !== true ||
                     <h3>Talks</h3>
                     <p>
                         <a href="http://www.slideshare.net/erickt86/secureapi" target="_blank">
-                            http://www.slideshare.net/erickt86/secureapi
+                            Erick Belluci Tedeschi <br>
+                            Applying Security Controls on REST APIs
                         </a>
                     </p>
+                    <br>
                     <p>
                         <a href="http://www.slideshare.net/lcobucci/jwt-to-authentication-and-beyond" target="_blank">
-                            http://www.slideshare.net/lcobucci/jwt-to-authentication-and-beyond
+                            Luís Cobucci <br>
+                            JWT - To authentication and beyond!
                         </a>
                     </p>
                 </section>
