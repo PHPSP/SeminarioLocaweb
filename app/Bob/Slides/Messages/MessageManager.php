@@ -28,6 +28,8 @@ class MessageManager
             return new PingMessage($obj, $connection);
         } else if ($obj->type == 'chat') {
             return new ChatMessage($obj, $connection);
+        } else if ($obj->type == 'coords') {
+            return new CoordsMessage($obj, $connection);
         } else {
             return new Message($obj, $connection);
         }

@@ -371,7 +371,7 @@
                   <h2 style="color: #fff">
                     Quê que dá pra gente fazer com esse "sonho" aí
                   </h2>
-                  <canvas id="react-sonho"></canvas>
+                  <canvas id="react-sonho" style="width: 100%; height: 100%;" width="100%"></canvas>
                 </section>
 
                 <section>
@@ -775,6 +775,64 @@
           <section data-background-size="42%" data-background="images/logging/04.png"></section>
           <section data-background-size="42%" data-background="images/logging/05.png"></section>
         </section>
+        <section>
+          <section>
+            <h2>
+              Case 02: PHPBot - Automação de tarefas
+            </h2>
+            <small>
+              <a href="https://github.com/nawarian/PHPBot" target="_new">
+                https://github.com/nawarian/PHPBot
+              </a>
+            </small>
+            <p>
+              Computadores com Windows possuem a Win32 API que, dentre outas coisas,
+              permite o envio de eventos de periféricos como teclado e mouse. <br>
+              Para computadores com sistemas Unix-like que utilizem o X11, podemos utilizar
+              a libx11 para alcançar o mesmo resultado.
+            </p>
+          </section>
+          <section>
+            <h2>
+              Implementação
+            </h2>
+            <p>
+              O PHP não tem acesso à Win32API sem utilizar extensões, para isto <strong>python</strong>
+              se mostrou útil.
+              Para o X11 ainda não existe uma biblioteca em PHP, mas a ferramenta de linha de comando <strong>xdotool</strong>
+              já oferece tudo o que precisamos. <br>
+              Trata-se portando de uma série de subprocessos chamados de forma organizada.
+            </p>
+          </section>
+          <section>
+            <h2>Exemplo: runando no Tibia :)</h2>
+            <pre><code class="php">
+      $dm = PHPBot\DesktopManager\Factory::create($loop);
+      $runa = $argv[1];
+
+      $runar = $dm->createCommandPipeline(
+          $dm->wait(.5),
+          $dm->keyboard()->sendKey(Keys::ENTER()),
+          $dm->wait(.5),
+          $dm->keyboard()->type($runa),
+          $dm->wait(.5),
+          $dm->keyboard()->sendKey(Keys::ENTER()),
+          $dm->wait(2)
+      );
+
+      $runar->start()
+            ->then($onPipelineEndedCallback);
+            </code></pre>
+          </section>
+        </section>
+        <section>
+          <h2>
+            Case 03: Canvas remoto <br>
+            <small>
+              Websockets + HTML5 Canvas
+            </small>
+          </h2>
+        </section>
 			</div>
 
 		</div>
@@ -834,6 +892,104 @@
 			Reveal.initialize(revealConfig);
 		</script>
     <script src="js/plugins/NoSleep.min.js"></script>
+
+    <script>
+      window.onload = function () {
+        var reactCanvas = document.getElementById('react-sonho'),
+            ctx = reactCanvas.getContext('2d'),
+            drawing = false;
+        window.toDraw = new Array;
+
+        ctx.fillStyle = '#fff';
+        var radius = 10;
+
+        window.drawCircle = function (context, x, y) {
+          context.beginPath();
+          context.moveTo(x, y);
+          context.arc(x, y, radius, 0, 2 * Math.PI, false);
+          context.fill();
+        };
+
+        function toggleDrawing (evt) {
+          drawing = !drawing;
+          evt.preventDefault();
+        }
+
+        window.addEventListener('touchstart', toggleDrawing);
+        window.addEventListener('touchend', toggleDrawing);
+        window.addEventListener('mouseup', toggleDrawing);
+        window.addEventListener('mousedown', toggleDrawing);
+
+        window.addEventListener('mousemove', function (e) {
+          if (!drawing) return;
+          
+          toDraw.push({
+            x: e.clientX,
+            y: e.clientY
+          });
+        });
+        
+        window.addEventListener('touchmove', function (e) {
+          if (!drawing) return;
+
+          for (var i in e.touches) {
+            toDraw.push({
+              x: e.touches[i].clientX,
+              y: e.touches[i].clientY
+            });
+          }
+        });
+
+        setInterval(function () {
+          if (toDraw.length == 0 || !drawing) {
+            if (toDraw.length) {
+              toDraw = new Array();
+            }
+          }
+
+          if (window.drawingWs) {
+            for (var i in toDraw) {
+              var coords = toDraw[i];
+
+              window.drawingWs.send(JSON.stringify({
+                type: 'coords',
+                data: {
+                  x: coords.x,
+                  y: coords.y
+                }
+              }));
+            }
+          }
+
+          for (var i in toDraw) {
+            var coords = toDraw[i];
+            drawCircle(ctx, coords.x, coords.y);
+
+            toDraw.splice(toDraw.indexOf(coords), 1);
+          }
+        }, 0);
+
+        window.drawingWs = new WebSocket('ws://'+websocketsAddress);
+        window.drawingWs.onopen = function () {
+          window.onresize();
+        };
+
+        window.onresize = function () {
+          reactCanvas.width = window.innerWidth;
+          reactCanvas.height = window.innerHeight;
+
+          if (window.drawingWs && window.drawingWs.readyState != window.drawingWs.CONNECTING) {
+            window.drawingWs.send(JSON.stringify({
+              type: 'resize',
+              data: {
+                width: reactCanvas.width,
+                height: reactCanvas.height
+              }
+            }));
+          }
+        };
+      };
+    </script>
 
 	</body>
 </html>
