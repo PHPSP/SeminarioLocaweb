@@ -706,6 +706,76 @@
             </p>
           </section>
         </section>
+        <section>
+          <h2>
+            Dúvidas?
+          </h2>
+        </section>
+        <section>
+          <h2>
+            Cases legais e marotos!
+          </h2>
+        </section>
+        <section>
+          <section>
+            <h2>
+              Case 01: Logging não bloqueante
+            </h2>
+            <p>
+              Através de sockets ou mesmo de subprocessos somos capazes
+              de realizar o logging de aplicações sem aumentar drasticamente
+              o tempo de execução.
+              <br>
+              O Código abaixo ilustra uma aplicação com subprocessos.
+            </p>
+          </section>
+          <section>
+            <h2>
+              Exemplo chulo com Monolog:
+            </h2>
+            <small>
+              Esta ferramenta roda como linha de comando
+            </small>
+            <pre><code class="php">
+      // $ php log.php meuArquivo.log 'Texto para o log'
+      require_once dirname(__FILE__).'/vendor/autoload.php';
+
+      use Monolog\Logger;
+      use Monolog\Handler\StreamHandler;
+
+      $logFile = $loggerName = $argv[1]; // meuArquivo.log
+      $textToLog = $argv[2]; // Texto para o log
+
+      $log = new Logger($loggerName);
+      $log->pushHandler(new StreamHandler($logFile), Logger::WARNING);
+
+      $log->addInfo($textToLog);
+            </code></pre>
+          </section>
+          <section>
+            <h2>
+              Utilizando log.php
+            </h2>
+            <pre><code class="php">
+      use React\ChildProcess\Process;
+
+      $loop = React\EventLoop\Factory::create();
+      $stdIn = new React\Stream\Stream(STDIN, $loop);
+      
+      $stdIn->on('data', function($input) use ($loop) {
+          $comando = "php log.php input.log '{$input}'";
+          (new Process($comando))->start($loop);
+      });
+
+      $loop->run();
+            </code></pre>
+          </section>
+          <section data-background-size="42%" data-background="images/logging/01.png"></section>
+          <section data-background-size="42%" data-background="images/logging/02.png"></section>
+          <section data-background-size="42%" data-background="images/logging/03.png"></section>
+          <section data-background-size="42%" data-background="images/logging/04.png"></section>
+          <section data-background-size="42%" data-background="images/logging/05.png"></section>
+        </section>
 			</div>
 
 		</div>
