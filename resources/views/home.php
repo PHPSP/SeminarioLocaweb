@@ -707,13 +707,12 @@
           </section>
         </section>
         <section>
-          <h2>
-            Dúvidas?
-          </h2>
-        </section>
-        <section>
-          <h2>
+          <h2 class="fragment fade-out">
             Cases legais e marotos!
+          </h2>
+          <br>
+          <h2 class="fragment fade-in">
+            Dúvidas até o momento?
           </h2>
         </section>
         <section>
