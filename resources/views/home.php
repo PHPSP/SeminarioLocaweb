@@ -367,11 +367,11 @@
                   </section>
                 </section>
 
-                <section id="slide-sonho" data-background="images/mind-blow.gif">
+                <section id="slide-sonho">
                   <h2 style="color: #fff">
                     Quê que dá pra gente fazer com esse "sonho" aí
                   </h2>
-                  <canvas id="react-sonho" style="width: 100%; height: 100%;" width="100%"></canvas>
+                  <canvas id="react-sonho" style="border: 1px solid #000;"></canvas>
                 </section>
 
                 <section>
@@ -647,16 +647,6 @@
             </code></pre>
           </section>
         </section>
-        <section data-background="images/ross.gif">
-          <div style="background-color: rgba(0, 0, 0, .4); border-radius: .5em; padding: 1em" class="fragment fade-in">
-            <p>
-              Legal, legal...
-            </p>
-            <p class="fragment fade-in">
-              Isso é só a base do React PHP, agora vamos à parte interessante!!
-            </p>
-          </div>
-        </section>
         <section>
           <section data-background="images/telecurso-revisao.gif"></section>
           <section>
@@ -705,6 +695,16 @@
               <strong class="fragment fade-in">:)</strong>
             </p>
           </section>
+        </section>
+        <section data-background="images/ross.gif">
+          <div style="background-color: rgba(0, 0, 0, .4); border-radius: .5em; padding: 1em" class="fragment fade-in">
+            <p>
+              Legal, legal...
+            </p>
+            <p class="fragment fade-in">
+              Isso é só a base do React PHP, agora vamos à parte interessante!!
+            </p>
+          </div>
         </section>
         <section>
           <h2 class="fragment fade-out">
@@ -825,14 +825,6 @@
             </code></pre>
           </section>
         </section>
-        <section>
-          <h2>
-            Case 03: Canvas remoto <br>
-            <small>
-              Websockets + HTML5 Canvas
-            </small>
-          </h2>
-        </section>
 			</div>
 
 		</div>
@@ -899,11 +891,13 @@
             ctx = reactCanvas.getContext('2d'),
             drawing = false;
         window.toDraw = new Array;
+        window.toDrawReceived = new Array;
 
-        ctx.fillStyle = '#fff';
         var radius = 10;
 
         window.drawCircle = function (context, x, y) {
+          context.fillStyle = '#fff';
+
           context.beginPath();
           context.moveTo(x, y);
           context.arc(x, y, radius, 0, 2 * Math.PI, false);
@@ -915,79 +909,56 @@
           evt.preventDefault();
         }
 
-        window.addEventListener('touchstart', toggleDrawing);
-        window.addEventListener('touchend', toggleDrawing);
         window.addEventListener('mouseup', toggleDrawing);
         window.addEventListener('mousedown', toggleDrawing);
 
-        window.addEventListener('mousemove', function (e) {
-          if (!drawing) return;
-          
-          toDraw.push({
-            x: e.clientX,
-            y: e.clientY
-          });
-        });
-        
-        window.addEventListener('touchmove', function (e) {
+        reactCanvas.addEventListener('mousemove', function (e) {
           if (!drawing) return;
 
-          for (var i in e.touches) {
-            toDraw.push({
-              x: e.touches[i].clientX,
-              y: e.touches[i].clientY
-            });
-          }
+          toDraw.push({
+            x: e.offsetX + 30,
+            y: e.layerY + 30
+          });
         });
 
         setInterval(function () {
-          if (toDraw.length == 0 || !drawing) {
-            if (toDraw.length) {
-              toDraw = new Array();
-            }
+          if (window.drawingWs && toDraw.length) {
+            window.drawingWs.send(JSON.stringify({
+              type: 'coords',
+              coords: toDraw
+            }));
           }
 
-          if (window.drawingWs) {
-            for (var i in toDraw) {
-              var coords = toDraw[i];
+          var draw = toDraw.concat(toDrawReceived);
+          toDrawReceived = new Array;
+          toDraw = new Array;
 
-              window.drawingWs.send(JSON.stringify({
-                type: 'coords',
-                data: {
-                  x: coords.x,
-                  y: coords.y
-                }
-              }));
-            }
-          }
-
-          for (var i in toDraw) {
-            var coords = toDraw[i];
+          for (var i in draw) {
+            var coords = draw[i];
             drawCircle(ctx, coords.x, coords.y);
 
-            toDraw.splice(toDraw.indexOf(coords), 1);
+            draw.splice(draw.indexOf(coords), 1);
           }
-        }, 0);
+        }, 300);
 
         window.drawingWs = new WebSocket('ws://'+websocketsAddress);
         window.drawingWs.onopen = function () {
           window.onresize();
         };
 
-        window.onresize = function () {
-          reactCanvas.width = window.innerWidth;
-          reactCanvas.height = window.innerHeight;
+        window.drawingWs.onmessage = function (e) {
+          var msg = JSON.parse(e.data);
 
-          if (window.drawingWs && window.drawingWs.readyState != window.drawingWs.CONNECTING) {
-            window.drawingWs.send(JSON.stringify({
-              type: 'resize',
-              data: {
-                width: reactCanvas.width,
-                height: reactCanvas.height
-              }
-            }));
+          if (msg.type == 'coords') {
+            toDrawReceived = toDrawReceived.concat(msg.coords);
           }
         };
+
+        window.onresize = function () {
+          reactCanvas.width = 600;
+          reactCanvas.height = 800;
+        };
+
       };
     </script>
 

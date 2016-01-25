@@ -7,16 +7,15 @@ namespace App\Bob\Slides\Messages;
 class CoordsMessage extends Message
 {
     public $type = 'coords';
-    public $x;
-    public $y;
+
+    public $coords;
 
     public function __construct($data, $connection)
     {
-        parent::__construct($data, $connection);
+        $this->connection = $connection;
+        // parent::__construct($data, $connection);
+        $this->coords = $data->coords;
 
         $cache = \Cache::get($connection->session);
-
-        $this->x = $this->data->x;
-        $this->y = $this->data->y;
     }
 }
