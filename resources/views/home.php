@@ -824,6 +824,9 @@
             ->then($onPipelineEndedCallback);
             </code></pre>
           </section>
+          <section>
+            <video class="stretch" src="images/phpbot/tibiabot.mp4"></video>
+          </section>
         </section>
 			</div>
 
