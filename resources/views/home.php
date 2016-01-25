@@ -141,7 +141,7 @@
                     
                   </section>
 
-                  <section>
+                  <section id="nawarian">
                     <h2>
                       Níckolas Daniel da Silva
                     </h2>
@@ -178,7 +178,9 @@
                       </a>
                     </small>
                     <br>
+                    <img data-src="images/yellow-heart.png" style="width: 2.3em;">
                     <img data-src="images/skype-hug.gif" style="border: 1px solid #000">
+                    <img data-src="images/green-heart.png" style="width: 2.3em;">
                   </section>
                 </section>
 
@@ -707,12 +709,8 @@
           </div>
         </section>
         <section>
-          <h2 class="fragment fade-out">
+          <h2>
             Cases legais e marotos!
-          </h2>
-          <br>
-          <h2 class="fragment fade-in">
-            Dúvidas até o momento?
           </h2>
         </section>
         <section>
@@ -827,6 +825,13 @@
           <section>
             <video class="stretch" src="images/phpbot/tibiabot.mp4"></video>
           </section>
+        </section>
+        <section data-background="images/duvidas-lego.gif">
+          <h2>
+            <a href="#nawarian">
+              Dúvidas?
+            </a>
+          </h2>
         </section>
 			</div>
 
