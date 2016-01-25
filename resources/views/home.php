@@ -4,10 +4,10 @@
 	<head>
 		<meta charset="utf-8">
 
-		<title>React e Ratchet, async e websockets com PHP</title>
+		<title>5 Seminario Locaweb PHPSP</title>
 
-		<meta name="description" content="A framework for easily creating beautiful presentations using HTML">
-		<meta name="author" content="Hakim El Hattab">
+		<meta name="description" content="Slide 5 Seminario Locaweb PHPSP">
+		<meta name="author" content="PHPSP">
 
 		<meta name="apple-mobile-web-app-capable" content="yes" />
 		<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
@@ -74,7 +74,7 @@
                     <h4>Instruções para Palestrantes!</h4>
                 </section>
 
-				<section class="sound-comecar">
+				<section>
 					<h1>Bem vindo ao guia de Palestrantes para o Seminário Locaweb PHPSP</h1>
 				</section>
 
@@ -115,18 +115,19 @@
                     </div>
                 </section>
 
-                <section class="sound-suspense02" data-number="1">
+                <section class="sound-suspense02">
                     <p>Som</p>
                     <p>Para adcionar sons, você deve alterar o arquivo "public/js/modules/sound.js" e incluir uma classe sound-* na section</p>
                     <p>Use esse slide como exemplo</p>
                 </section>
 
-                <section class="sound-suspense02" data-number="1">
+                <section>
                     <p>Mantenha Esses Slides</p>
                     <p>Insira seus slides após esse slide e mantenha os slides de exemplo para que outros palestrantes possam ver também</p>
                     <p>Envie-nos um Pull Request até 10/01/2016</p>
                 </section>
 
+<<<<<<< HEAD
                 <!-- react além dos websockets -->
                 <section>
                   <section>
@@ -833,6 +834,41 @@
             </a>
           </h2>
         </section>
+=======
+                <section class="poll" data-number="pannel" data-change="true">
+                    <p>Decida Sobre o Painel</p>
+                    <div class="button-level" data-value="keep">
+                        <span>Mantenha o Tema (<b>0</b>)</span>
+                        <div class="level green"></div>
+                    </div>
+
+                    <div class="button-level" data-value="change">
+                        <span>Troque de Tema (<b>0</b>)</span>
+                        <div class="level red"></div>
+                    </div>
+
+                    <?php if ($mode == 'presenter') : ?>
+                        <div class="button-level" data-value="clean">
+                            <span>limpar Dados (<b>0</b>)</span>
+                            <div class="level red"></div>
+                        </div>
+                    <?php endif; ?>
+                </section>
+
+                <section class="raffle" data-number="pannel" data-change="true">
+                    <h2 class="winner-message"></h2>
+                    <p>Vencedor</p>
+                    <p class="winner-nickname"></p>
+
+                    <?php if ($mode == 'presenter') : ?>
+                        <div class="button-level" data-value="raffle">
+                            <span>Sortear</span>
+                            <div class="level green"></div>
+                        </div>
+                    <?php endif; ?>
+                </section>
+
+>>>>>>> upstream/master
 			</div>
 
 		</div>

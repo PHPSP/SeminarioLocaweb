@@ -30,6 +30,8 @@ class MessageManager
             return new ChatMessage($obj, $connection);
         } else if ($obj->type == 'coords') {
             return new CoordsMessage($obj, $connection);
+        } else if ($obj->type == 'raffle') {
+            return new RaffleMessage($obj, $connection);
         } else {
             return new Message($obj, $connection);
         }

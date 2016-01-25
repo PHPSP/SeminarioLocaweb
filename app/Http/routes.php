@@ -11,35 +11,22 @@
 |
 */
 
+use Illuminate\Http\Request;
+
 $app->get('/', function() use ($app) {
-    $md5 = md5(Session::getId());
-
-    if (! Session::has('mode')) {
-        Session::put('mode', 'participant');
-    }
-
     if (! Session::has('nickname')) {
-        $faker = Faker\Factory::create('pt_BR');
-
-        do {
-            $nickname = $faker->userName;
-        } while (\Cache::has($nickname));
-
-        \Cache::forever($nickname, '1');
-        Session::put('nickname', $nickname);
-    }
-
-    $mode = Session::get('mode');
-
-    if (! \Cache::has($md5)) {
-        \Cache::forever($md5, [
-            'mode' => $mode,
-            'nickname' => Session::get('nickname'),
-        ]);
+        return view('login');
     }
 
     //Caso seja rodado no localhost:8000, por exemplo
     //retira os : do nome do servidor
+    $md5 = md5(Session::getId());
+
+    if (! \Cache::has($md5)) {
+        return view('login');
+    }
+
+    $mode = Session::get('mode');
     $host = $_SERVER['HTTP_HOST'];
     $hostExplode = explode(':', $host);
     $host = $hostExplode[0];
@@ -53,37 +40,36 @@ $app->get('/', function() use ($app) {
     return view('home', $data);
 });
 
-$app->get('/presenter', function() use ($app) {
-    if (!isset($_SERVER['PHP_AUTH_USER'])) {
-        header('WWW-Authenticate: Basic realm="Presenter Mode"');
-        header('HTTP/1.0 401 Unauthorized');
-        echo 'Você não é o apresentador?';
-        exit;
+$app->post('/', function(Request $request) use ($app) {
+    //O usuário é 'admin@admin.com.br' e a senha é 'phprules'?
+    if ('admin@admin.com.br' === $request->input('mail') && '27da247ac3132070bfe88338846955adf41955fc' === sha1($request->input('pass'))) {
+        $md5 = md5(Session::getId());
+
+        //Grava na sessão que o visitante é o apresentador
+        Session::put('mode', 'presenter');
+        Session::put('nickname', 'admin@admin.com.br');
+
+        if (! \Cache::has($md5)) {
+            $cache = [];
+            $cache['mode'] = 'presenter';
+            $cache['nickname'] = 'admin@admin.com.br';
+
+            \Cache::forever($md5, $cache);
+        }
     } else {
-        $username = $_SERVER['PHP_AUTH_USER'];
-        $password = $_SERVER['PHP_AUTH_PW'];
+        $md5 = md5(Session::getId());
 
-        //O usuário é 'admin' e a senha é 'phprules'?
-        if ('admin' === $username && '27da247ac3132070bfe88338846955adf41955fc' === sha1($password)) {
-            $md5 = md5(Session::getId());
+        Session::put('mode', 'participant');
+        Session::put('nickname', $request->input('mail'));
 
-            //Grava na sessão que o visitante é o apresentador
-            Session::put('mode', 'presenter');
+        if (! \Cache::has($md5)) {
+            $cache = [];
+            $cache['mode'] = 'participant';
+            $cache['nickname'] = $request->input('mail');
 
-            if (\Cache::has($md5)) {
-                $cache = \Cache::get('$md5');
-                $cache['mode'] = 'presenter';
-                $cache['nickname'] = 'Bob';
-
-                \Cache::forever($md5, $cache);
-            }
-
-            //Redireciona de volta para a apresentação
-            return redirect('/');
-        } else {
-            header('HTTP/1.0 401 Unauthorized');
-            echo 'Aqui não tem biscoito!';
-            exit;
+            \Cache::forever($md5, $cache);
         }
     }
+
+    return redirect('/');
 });

@@ -23,13 +23,11 @@ vagrantfile:
                 cpus: 1
         provision:
             puppet:
-                manifests_path: puphpet/puppet
-                manifest_file: site.pp
+                manifests_path: puphpet/puppet/manifests
                 module_path: puphpet/puppet/modules
                 options:
                     - '--verbose'
                     - '--hiera_config /vagrant/puphpet/puppet/hiera.yaml'
-                    - '--parser future'
         synced_folder: {  }
         usable_port_range:
             start: 10200
@@ -44,6 +42,7 @@ vagrantfile:
         forward_agent: false
         forward_x11: false
         shell: 'bash -l'
+        insert_key: true
     vagrant:
         host: detect
 server:
@@ -68,7 +67,7 @@ locale:
 firewall:
     install: '1'
     rules:
-        fr_z1m241oll0ct:
+        fr_1rmx2iytkhay:
             port:
                 - '3306'
                 - '777'
@@ -84,9 +83,13 @@ nginx:
         default_vhost: 1
         proxy_buffer_size: 128k
         proxy_buffers: '4 256k'
+        proxy_connect_timeout: 600s
+        proxy_send_timeout: 600s
+        proxy_read_timeout: 600s
+        names_hash_bucket_size: 128
     upstreams: {  }
     vhosts:
-        nxv_xbcivtkz1neh:
+        nxv_5yeln208we2h:
             server_name: seminario.dev
             server_aliases:
                 - www.seminario.dev
@@ -106,7 +109,7 @@ nginx:
             rewrite_to_https: '1'
             spdy: '1'
             locations:
-                nxvl_acqrupa3gewg:
+                nxvl_sc5gpm2aqd9s:
                     location: /
                     autoindex: 'off'
                     internal: 'false'
@@ -117,7 +120,9 @@ nginx:
                     fastcgi: ''
                     fastcgi_index: ''
                     fastcgi_split_path: ''
-                nxvl_vxeo7jei6683:
+                    proxy: ''
+                    proxy_redirect: ''
+                nxvl_cc1kcml368an:
                     location: '~ \.php$'
                     autoindex: 'off'
                     internal: 'false'
@@ -131,9 +136,11 @@ nginx:
                     fast_cgi_params_extra:
                         - 'SCRIPT_FILENAME $request_filename'
                         - 'APP_ENV dev'
+                    proxy: ''
+                    proxy_redirect: ''
     proxies: {  }
 apache:
-    install: 0
+    install: '0'
     settings:
         user: www-data
         group: www-data
@@ -145,7 +152,7 @@ apache:
         - proxy_fcgi
         - rewrite
     vhosts:
-        av_am6cvvoy565z:
+        av_v8uxmv9u8y3y:
             servername: seminario.dev
             serveraliases:
                 - www.seminario.dev
@@ -162,7 +169,7 @@ apache:
             ssl_protocol: ''
             ssl_cipher: ''
             directories:
-                avd_atax84mz71g9:
+                avd_67wx6jwtwvos:
                     path: /vagrant/public
                     options:
                         - Indexes
@@ -174,7 +181,7 @@ apache:
                         - 'all granted'
                     custom_fragment: ''
                     files_match:
-                        avdfm_gd7bm8h1w59v:
+                        avdfm_w0aqh7x3e8yr:
                             path: \.php$
                             sethandler: 'proxy:fcgi://127.0.0.1:9000'
                             custom_fragment: ''
@@ -196,12 +203,7 @@ php:
             - mbstring
             - memcached
         pear: {  }
-        pecl:
-            - PDO_MYSQL
-            - PDO_SQLITE
-            - Fileinfo
-            - zip
-            - json
+        pecl: {  }
     ini:
         display_errors: 'On'
         error_reporting: '-1'
@@ -210,7 +212,7 @@ php:
     fpm_ini:
         error_log: /var/log/php-fpm.log
     fpm_pools:
-        phpfp_84uajmhyslup:
+        phpfp_t2cxmoft6ktn:
             ini:
                 prefix: www
                 listen: '127.0.0.1:9000'
@@ -255,7 +257,7 @@ drush:
 ruby:
     install: '1'
     versions:
-        rv_ivuztvukpnd2:
+        rv_bn53blnih4yk:
             bundler: '1'
             version: 1.9.3
             gems:
@@ -266,6 +268,8 @@ python:
     versions: {  }
 nodejs:
     install: '1'
+    settings:
+        version: '5'
     npm_packages:
         - bower
         - grunt-cli
@@ -284,6 +288,27 @@ hhvm:
         display_errors: 'On'
         error_reporting: '-1'
         date.timezone: UTC
+mariadb:
+    install: '0'
+    settings:
+        version: '10.0'
+        root_password: '123'
+        override_options: {  }
+    adminer: 0
+    users:
+        mariadbnu_eyk1ldwzaj4l:
+            name: dbuser
+            password: '123'
+    databases:
+        mariadbnd_iutdn1zoe3en:
+            name: dbname
+            sql: ''
+    grants:
+        mariadbng_4jk8a8xijmr5:
+            user: dbuser
+            table: '*.*'
+            privileges:
+                - ALL
 mysql:
     install: '1'
     settings:
@@ -294,46 +319,25 @@ mysql:
                 bind-address: '0.0.0.0'
     adminer: 0
     users:
-        mysqlnu_mg01dhko4ibg:
+        mysqlnu_v06oi5e99hkw:
             name: seminario@localhost
             password: seminario
-        mysqlnu_2nqfykzgsc6c:
+        mysqlnu_x5m98rf2poob:
             name: seminario@%
             password: seminario
     databases:
-        mysqlnd_yllw1yosc7e8:
+        mysqlnd_tt5n5de61m1k:
             name: seminario
             sql: ''
     grants:
-        mysqlng_py0cpdzuqe0i:
+        mysqlng_mrrn5sknayrv:
             user: seminario@localhost
             table: 'seminario.*'
             privileges:
                 - ALL
-        mysqlng_xkhn9g0w3y1n:
+        mysqlng_87kpr6i4f0nn:
             user: seminario@%
             table: 'seminario.*'
-            privileges:
-                - ALL
-mariadb:
-    install: '0'
-    settings:
-        version: '10.0'
-        root_password: '123'
-        override_options: {  }
-    adminer: 0
-    users:
-        mariadbnu_rd2sqm9ioexd:
-            name: dbuser
-            password: '123'
-    databases:
-        mariadbnd_d337c2zzxmu5:
-            name: dbname
-            sql: ''
-    grants:
-        mariadbng_vfbnul9ibm2m:
-            user: dbuser
-            table: '*.*'
             privileges:
                 - ALL
 postgresql:
@@ -354,6 +358,8 @@ mongodb:
         auth: 1
         bind_ip: 127.0.0.1
         port: '27017'
+    globals:
+        version: 2.6.0
     databases: {  }
 redis:
     install: '0'
@@ -363,15 +369,14 @@ sqlite:
     install: '1'
     adminer: 0
     databases: {  }
-mailcatcher:
+mailhog:
     install: '0'
     settings:
         smtp_ip: 0.0.0.0
         smtp_port: 1025
         http_ip: 0.0.0.0
-        http_port: '1080'
-        mailcatcher_path: /usr/local/rvm/wrappers/default
-        from_email_method: inline
+        http_port: '8025'
+        path: /usr/local/bin/mailhog
 beanstalkd:
     install: '0'
     settings:

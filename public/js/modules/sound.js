@@ -19,6 +19,11 @@ Modules.sound = {
 	    instance.volume = 0.5;
 	},
 
+	end: function() {
+		var instance = createjs.Sound.play('tchau');
+		instance.volume = 0.5;
+	},
+
 	checkCurrentSlide: function(currentSlide) {
 		var instance;
 		if ($(currentSlide).hasClass('sound-comecar')) {

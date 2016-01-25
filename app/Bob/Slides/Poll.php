@@ -14,21 +14,10 @@ class Poll
 
     /**
      * Votos ['value' => quantity]
-     * @var Array
+     * @var array
     */
     protected $votes = [];
 
-    /**
-     * Porcentagens ['value' => percent]
-     * @var Array
-    */
-    protected $percentages = [];
-
-    /**
-     * Número total de votos
-     * @var int
-    */
-    protected $total = 0;
 
     public function __construct($number)
     {
@@ -38,45 +27,51 @@ class Poll
     /**
      * Adiciona um voto na enquete
      *
+     * @param $user
      * @param object $value
      */
-    public function addVote($value)
+    public function addVote($user, $value)
     {
-        if (!array_key_exists($value, $this->votes)) {
-            $this->votes[$value] = 0;
-        }
-
-        $this->votes[$value]++;
-        $this->total++;
-
-        $this->calculatePercentages();
-    }
-
-    /**
-     * Cálcula as porcentanges de votos
-     */
-    public function calculatePercentages()
-    {
-        foreach ($this->votes as $key => $quantity) {
-            $this->percentages[$key] = ceil(($quantity / $this->total) * 100);
+        if($value == 'clean'){
+            $this->votes = [];
+        }else {
+            $this->votes[$user] = $value;
         }
     }
 
     /**
      * Retorna as porcentagens de votos
-     * @return Array Porcentagens ['value' => percent]
+     * @return array Porcentagens ['value' => percent]
      */
     public function getPercentages()
     {
-        return $this->percentages;
+        $percentages = array();
+        $total = count($this->votes);
+        $count = $this->getVotes();
+
+        foreach ($count as $key => $quantity) {
+            $percentages[$key] = ceil(($quantity / $total) * 100);
+        }
+
+        return $percentages;
     }
 
     /**
      * Retorna os votos
-     * @return Array Votos ['value' => quantity]
+     * @return array Votos ['value' => quantity]
      */
     public function getVotes()
     {
-        return $this->votes;
+        $count = array();
+
+        foreach ($this->votes as $user => $value) {
+            if (!array_key_exists($value, $count)) {
+                $count[$value] = 0;
+            }
+
+            $count[$value]++;
+        }
+
+        return $count;
     }
 }

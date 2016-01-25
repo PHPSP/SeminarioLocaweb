@@ -68,13 +68,11 @@ Esse repositório possui receitas de provisionamento com Vagrant criadas usando 
 basta executar o comando `vagrant up` na raiz do projeto, isso irá baixar uma imagem ubuntu 14.04, instalar e configurar
 tudo que é necessário para rodar a aplicação. Porem esse processo pode levar um tempo.
 
-Após concluído o processo de provisionamento acesse a maquina virtual via ssh uutilizando o comando `vagrant ssh` e 
-inicie o servidor de slides com o comando
+Após concluído o processo de provisionamento acesse a maquina virtual via ssh uutilizando o comando `vagrant ssh` e
+inicie o servidor de slides com o seguinte comando no diretório `/vagrant`:
 
 ```bash
-sudo su
-cd /vagrant
-php artisan slides:server
+sudo php artisan slides:server
 ```
 
 ### Rodando Localmente sem Vagrant
@@ -84,7 +82,7 @@ host para apontar para o diretório `public` desse repositório, ou executar o c
 servidor de desenvolvimento local.
 
 ```bash
-php artisan serve
+sudo php artisan serve
 ```
 
 Algumas extensões do PHP e outras dependências devem estar habilitadas ou instaladas no seu sistema para que a aplicação
@@ -101,16 +99,17 @@ Se não tiver executado com Vagrant substitua o endereço pelo endereço configu
 http://localhost:8000 caso esteja executando com o servidor de desenvolvimento tanto ao acessar como apresentador
 quanto como expectador
 
-### Acesso com Apresentador
-
-http://seminario.dev/presenter
-
-Usuário: admin
-Senha: phprules
-
-### Acesso como Expectador
+### Acesso aos Slides
 
 http://seminario.dev
+
+Para acessar como expectador digite qualquer e-mail válido na caixa de e-mail e deixe a senha em branco.
+Para acessar como apresentador use as seguintes credenciais:
+
+```
+Email: admin@admin.com.br
+Senha: phprules
+```
 
 ## Slides de Exemplos
 
@@ -125,6 +124,40 @@ outros palestrantes e organizadores do evento também estarão realizando mudan�
 procure não interferir nas demais alterações.
 
 Caso tenha algum problema com a aplicação abra uma issue nesse mesmo respositório.
+
+## Know Issues
+
+### Conexão SSH
+
+Se durante o provisionamento da maquina virtual você receber uma sequencia de erros com a seguinte mensagem:
+
+```
+Warning: Authentication failure. Retrying...
+```
+
+Acesso o diretório `puphpet/files/dot/ssh` e remova todos os arquivos de dentro desse diretório exceto o arquivo 
+`insecure_private_key`. Em seguida remova a maquina virtual e inicie o procedimento novamente com os seguintes comandos:
+
+```
+vagrant destroy
+vagrant up
+```
+
+### Problema de Memcached
+
+Identificamos um possível problema na instalação do memcached na maquina virtual, porem o problema parece não acontecer
+em 100% das vezes, caso receba um erro informando que a classe `memcached` não foi encontrada ao acessar os slides
+execute os seguintes passos para corrigir os problemas
+
+1. Acesse a maquina virtual via ssh com `vagrant ssh`
+2. Certifique-se que memcached e php5-memcached estão instalados com `sudo apt-get install memcached php5-memcached`
+3. Crie um arquivo de configuração do memcached com `sudo touch /etc/php5/mods-available/memcached.ini`
+4. Acesse esse arquivo com o seu editor de texto favorito. ex: `sudo vim /etc/php5/mods-available/memcached.ini`
+5. Insira o seguinte conteúdo nesse arquivo `extension=memcached.so`. Salve e feche `:wq` se estiver no vim
+6. Execute o seguinte comando: `sudo php5enmod memcached` para habilitar a extensão
+7. Reestart os serviços com `sudo service php5-fpm restart && sudo service memcached restart && sudo service nginx restart`
+
+Caso o problema persista abra uma issue nesse repositório para que possamos ajuda-lo.
 
 ### License
 

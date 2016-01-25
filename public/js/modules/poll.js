@@ -8,7 +8,11 @@ Modules.poll = {
 
 			if (!$(poll).hasClass('votado')) {
 				ratchet.emit('poll', {number: $(poll).attr('data-number'), value: $(this).attr('data-value')});
-				$(poll).addClass('votado');
+
+				if($(poll).attr('data-change') != "true"){
+					$(poll).addClass('votado');
+				}
+
 				Modules.sound.horn();
 			}
 		});
@@ -25,13 +29,24 @@ Modules.poll = {
 		if (data.type == 'poll-result') {
 			var poll = $('.poll[data-number="' + data.number + '"]');
 
+			poll.find('.button-level').find('span b').html('0');
+			poll.find('.button-level').find('.level').height('0%');
+
 			$.each(data.votes, function(index, quantity) {
 				poll.find('.button-level[data-value="' + index + '"]').find('span b').html(quantity);
 			});
 
 			$.each(data.percentages, function(index, quantity) {
 				poll.find('.button-level[data-value="' + index + '"]').find('.level').height(quantity + '%');
+				text = poll.find('.button-level[data-value="' + index + '"]').find('span b').text();
+				poll.find('.button-level[data-value="' + index + '"]').find('span b').html(text + ' - ' + quantity + '%');
 			});
+
+			//if(data.number == 'pannel'){
+			//	if(data.percentages.change >= 50){
+			//		Modules.sound.end();
+			//	}
+			//}
 		}
 	},
 }
