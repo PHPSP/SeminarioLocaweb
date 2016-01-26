@@ -127,7 +127,6 @@
                     <p>Envie-nos um Pull Request até 10/01/2016</p>
                 </section>
 
-<<<<<<< HEAD
                 <!-- react além dos websockets -->
                 <section>
                   <section>
@@ -139,6 +138,8 @@
 
       $seminarioLocaweb->setMadnessMode(true);
                       </code></pre>
+
+                      <a href="https://joind.in/talk/23fb1">https://joind.in/talk/23fb1</a>
                     
                   </section>
 
@@ -178,10 +179,6 @@
                         http://phpsp.org.br
                       </a>
                     </small>
-                    <br>
-                    <img data-src="images/yellow-heart.png" style="width: 2.3em;">
-                    <img data-src="images/skype-hug.gif" style="border: 1px solid #000">
-                    <img data-src="images/green-heart.png" style="width: 2.3em;">
                   </section>
                 </section>
 
@@ -834,7 +831,6 @@
             </a>
           </h2>
         </section>
-=======
                 <section class="poll" data-number="pannel" data-change="true">
                     <p>Decida Sobre o Painel</p>
                     <div class="button-level" data-value="keep">
@@ -867,8 +863,6 @@
                         </div>
                     <?php endif; ?>
                 </section>
-
->>>>>>> upstream/master
 			</div>
 
 		</div>
